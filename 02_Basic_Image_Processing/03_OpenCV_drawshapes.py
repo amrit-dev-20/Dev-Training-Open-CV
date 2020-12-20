@@ -51,6 +51,9 @@ opencv.line(blank_image,(0,0), (250,250),(0,0,255),thickness=2)
 opencv.imshow("Line from 0,0 to 250,250",blank_image)
 opencv.waitKey(0)
 
+##Writing a text on a blank Image using OpenCV
+
+
 
 #Changing(Resizing) the shape of the rectangle 
 blank_image[:]=0,0,0

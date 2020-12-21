@@ -3,15 +3,24 @@ Drawing Shapes and coloring in this code
 """
 import cv2 as opencv
 import numpy as np
-##Creation of blank image
+
+"""
+1. Creation of blank image
+   - Use numpy to create a blank image.
+   - most common datatypes: uint8
+"""
 blank_image = np.zeros((500,500,3),dtype='uint8')
 bl_window = opencv.imshow('Blank Image',blank_image)
 opencv.waitKey(0)
 opencv.destroyWindow(bl_window)
 
-
-##Paint with a specific color(BGR Format)
-#Blue color
+"""
+2. Paint with a specific color(BGR Format)
+   - Blue color
+   - Green color
+   - Red color
+"""
+#Blue Color
 blank_image[:] = 255,0,0
 opencv.imshow('Blue Color',blank_image)
 opencv.waitKey(0)
@@ -27,11 +36,19 @@ opencv.imshow('Red Color',blank_image)
 opencv.waitKey(0)
 
 
-## Painting a specific region
+#Colouring a specific region
 blank_image[:] = 0,0,0
 blank_image[200:300,300:400] = 0,255,0
 opencv.imshow('Green Rectangle',blank_image)
 opencv.waitKey(0)
+
+"""
+3. Drawing Shapes on Blank Image using OpenCV
+    - Rectangle/Square
+    - Circle
+    - Line
+    - Putting Text
+"""
 
 ##Drawing Shapes using OpenCV
 blank_image[:]=0,0,0
@@ -52,6 +69,10 @@ opencv.imshow("Line from 0,0 to 250,250",blank_image)
 opencv.waitKey(0)
 
 ##Writing a text on a blank Image using OpenCV
+blank_image[:] =0,0,0
+opencv.putText(blank_image,'Hello World', (0,50), opencv.FONT_HERSHEY_TRIPLEX,1.0,(0,255,0),thickness=1)
+opencv.imshow("Text on a Image", blank_image)
+opencv.waitKey(0)
 
 
 
@@ -64,10 +85,4 @@ opencv.imshow(' Resized Green Rectangle',blank_image)
 opencv.waitKey(0)
 
 
-
-
-
-# img = opencv.imread('images/beautiful-water-drop-on-dandelion-260nw-789676552.jpg')
-# opencv.imshow('Cat',img)
-# opencv.waitKey(0)
 opencv.destroyAllWindows()

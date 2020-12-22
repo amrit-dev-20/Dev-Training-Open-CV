@@ -1,4 +1,7 @@
+
+
 import cv2
+
 
 image =  cv2.imread('images/images.png')
 B, G, R = cv2.split(image)

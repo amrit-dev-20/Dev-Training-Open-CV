@@ -50,7 +50,6 @@ opencv.waitKey(0)
 
 opencv.destroyAllWindows()
 #########################################################################################
-
 ### Image Rotation 
 def rotate(img, angle, rotPoint = None):
     """
@@ -75,20 +74,34 @@ opencv.imshow('Rotating image Counter-Clockwise',rotated_counterclockwise)
 opencv.waitKey(0)
 
 rotated_clockwise = rotate(image, -45)
-opencv.imshow('Rotating image Counter-Clockwise',rotated_clockwise)
+opencv.imshow('Rotating image Clockwise',rotated_clockwise)
 opencv.waitKey(0)
+opencv.destroyAllWindows()
 
 ########################################################################################
 #### Other Important Functions
 
 # Resizing of Image(Zooming and Shrinking)
+resized_linear = opencv.resize(image,(300,300),interpolation=opencv.INTER_LINEAR)
+opencv.imshow('Resized Image using Linear Interpolation',resized_linear)
+opencv.waitKey(0)
+
+resized_area   = opencv.resize(image,(300,300),interpolation=opencv.INTER_AREA)
+opencv.imshow('Resized Image using Area Interpolation',resized_area)
+opencv.waitKey(0)
+
+resized_cubic  = opencv.resize(image,(300,300),interpolation=opencv.INTER_CUBIC)
+opencv.imshow('Resized Image using Cubic Interpolation',resized_cubic)
+opencv.waitKey(0)
+opencv.destroyAllWindows()
 
 
 # Flipping the Image
 flipped_image = opencv.flip(image,1)
+opencv.imshow('Test Image', image)
+opencv.waitKey(0)
 opencv.imshow('Flipped Image',flipped_image)
 opencv.waitKey(0)
-
 opencv.destroyAllWindows()
 
 

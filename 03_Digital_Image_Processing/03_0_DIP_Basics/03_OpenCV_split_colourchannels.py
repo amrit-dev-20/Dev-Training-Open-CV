@@ -20,6 +20,9 @@ cv2.waitKey(0)
 cv2.imshow('Red Space', R)
 cv2.waitKey(0)
 
+merged =cv2.merge([B,G,R])
+cv2.imshow('Merged Image',merged)
+cv2.waitKey(0)
 
 cv2.destroyAllWindows()
 

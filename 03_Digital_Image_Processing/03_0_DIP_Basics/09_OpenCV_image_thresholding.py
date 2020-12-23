@@ -97,6 +97,22 @@ if opencv.waitKey(0) & 0xff == 27:
 
 ### Otsu's Thesholding
 """
+In Otsu Thresholding, a value of the threshold isn’t chosen but is determined automatically. 
+A bimodal image (two distinct image values) is considered. The histogram generated contains 
+two peaks. So, a generic condition would be to choose a threshold value that lies in the 
+middle of both the histogram peak values.
 
+We use the Traditional cv2.threshold function and use cv2.THRESH_OTSU as an extra flag. 
 
 """
+
+opencv.imshow("Test Image",image)
+opencv.waitKey(0)
+
+thresh_otsu, thresh_image_otsu = opencv.threshold(image, 120, 255, opencv.THRESH_BINARY + opencv.THRESH_OTSU)
+
+opencv.imshow('Otsu Threshold', thresh_image_otsu)
+opencv.waitKey(0)
+
+if opencv.waitKey(0) & 0xff == 27:  
+    opencv.destroyAllWindows()  

@@ -68,4 +68,5 @@ opencv.waitKey(0)
 opencv.destroyAllWindows()
 
 
-### 3. Gradient
+### 3. Gradient Operation
+

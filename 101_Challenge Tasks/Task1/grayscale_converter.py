@@ -59,10 +59,19 @@ def convert_to_grayscale(input_path, output_path):
         count += 1
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--input', help='Enter the Input Path', type=str)
-parser.add_argument('-o', '--output', help='Enter the Output Path', type=str)
-args = parser.parse_args()
-input_path = args.input
-output_path = args.output
-convert_to_grayscale(input_path, output_path)
+def main(input_path, output_path):
+    convert_to_grayscale(input_path, output_path)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input', help='Enter Input', type=str, required=True)
+    parser.add_argument('--output', help='Enter Output', type=str)
+    args = parser.parse_args()
+    if args.output is None:
+        output_path = args.input
+    else:
+        output_path = args.output
+
+    input_path = args.input
+    main(input_path, output_path)

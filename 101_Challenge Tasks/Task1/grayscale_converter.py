@@ -6,6 +6,7 @@ The following code is to convert multiple images to grayscale.
 import glob
 import cv2 as opencv
 import time
+import argparse
 from os import listdir, makedirs
 
 
@@ -38,7 +39,7 @@ def convert_to_grayscale(input_path, output_path):
     4. Conversion from BGR TO GRAY scale using openCV
     5. Creation of new images with their curresponding Output Path.
     """
-    # Try block to check whether the input and output path are same.
+    # Try block to check whether the output path exists.
     try:
         makedirs(output_path)
     except Exception:
@@ -58,7 +59,10 @@ def convert_to_grayscale(input_path, output_path):
         count += 1
 
 
-# Testing Code
-input_path = input("Please Enter Input Path: ")
-output_path = input("Please Enter Output Path: ")
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--input', help='Enter the Input Path', type=str)
+parser.add_argument('-o', '--output', help='Enter the Output Path', type=str)
+args = parser.parse_args()
+input_path = args.input
+output_path = args.output
 convert_to_grayscale(input_path, output_path)

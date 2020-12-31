@@ -51,7 +51,7 @@ def convert_to_grayscale(input_path, output_path):
     except Exception:
         print(" Output Path exists, images will be written in same folder.")
         shutil.rmtree(output_path)
-    os.makedirs(output_path)
+        os.makedirs(output_path)
     input_path = input_path + '/**jpeg'
     # Recursive Parsing of Images
     image_files = glob.glob(input_path, recursive=True)

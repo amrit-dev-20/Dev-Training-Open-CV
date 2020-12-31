@@ -2,7 +2,6 @@
 The following code is to convert multiple images to grayscale.
 """
 
-
 import glob
 import cv2 as opencv
 import time
@@ -30,6 +29,12 @@ def my_timer(original_func):
     return wrapper
 
 
+def output_file_extractor(path):
+    dirname, filename = os.path.split(os.path.abspath(path))
+    file_name, ext = os.path.splitext(path)
+    return filename, ext
+
+
 @my_timer
 def convert_to_grayscale(input_path, output_path):
     """
@@ -46,14 +51,12 @@ def convert_to_grayscale(input_path, output_path):
     except Exception:
         print(" Output Path exists, images will be written in same folder.")
         shutil.rmtree(output_path)
-        os.makedirs(output_path)
+    os.makedirs(output_path)
     input_path = input_path + '/**jpeg'
-    # Collection of extensions
-    image_ext = ['.jpeg,']
     # Recursive Parsing of Images
     image_files = glob.glob(input_path, recursive=True)
     for image in image_files:
-        dirname, filename = os.path.split(os.path.abspath(image))
+        filename, ext = output_file_extractor(image)
         image_bgr = opencv.imread(image)
         image_gray = opencv.cvtColor(image_bgr, opencv.COLOR_BGR2GRAY)
         output_image_path = "{}/{}".format(output_path, filename)

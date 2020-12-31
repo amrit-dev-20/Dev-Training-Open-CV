@@ -7,7 +7,8 @@ import glob
 import cv2 as opencv
 import time
 import argparse
-from os import listdir, makedirs
+import shutil
+import os
 
 
 def my_timer(original_func):
@@ -16,7 +17,7 @@ def my_timer(original_func):
     - This decorator calculates the time take to convert single & all images.
     """
     def wrapper(*args, **kwargs):
-        image_count = len(listdir(input_path))
+        image_count = len(os.listdir(args[0]))
         start_time = time.time()
         time.sleep(1)
         result = original_func(*args, **kwargs)
@@ -41,25 +42,30 @@ def convert_to_grayscale(input_path, output_path):
     """
     # Try block to check whether the output path exists.
     try:
-        makedirs(output_path)
+        os.makedirs(output_path)
     except Exception:
         print(" Output Path exists, images will be written in same folder.")
-        output_path = input_path
-    # List of file Names
-    image_list = listdir(input_path)
+        shutil.rmtree(output_path)
+        os.makedirs(output_path)
     input_path = input_path + '/**jpeg'
+    # Collection of extensions
+    image_ext = ['.jpeg,']
     # Recursive Parsing of Images
     image_files = glob.glob(input_path, recursive=True)
-    count = 0
     for image in image_files:
+        dirname, filename = os.path.split(os.path.abspath(image))
         image_bgr = opencv.imread(image)
         image_gray = opencv.cvtColor(image_bgr, opencv.COLOR_BGR2GRAY)
-        output_image_path = output_path + '/' + str(image_list[count])
+        output_image_path = "{}/{}".format(output_path, filename)
         opencv.imwrite(output_image_path, image_gray)
-        count += 1
 
 
-def main(input_path, output_path):
+def main(args):
+    if args.output is None:
+        output_path = args.input
+    else:
+        output_path = args.output
+    input_path = args.input
     convert_to_grayscale(input_path, output_path)
 
 
@@ -68,10 +74,4 @@ if __name__ == '__main__':
     parser.add_argument('--input', help='Enter Input', type=str, required=True)
     parser.add_argument('--output', help='Enter Output', type=str)
     args = parser.parse_args()
-    if args.output is None:
-        output_path = args.input
-    else:
-        output_path = args.output
-
-    input_path = args.input
-    main(input_path, output_path)
+    main(args)

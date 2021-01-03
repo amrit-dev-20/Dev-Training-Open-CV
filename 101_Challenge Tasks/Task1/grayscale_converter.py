@@ -29,10 +29,19 @@ def my_timer(original_func):
     return wrapper
 
 
-def output_file_extractor(path):
-    dirname, filename = os.path.split(os.path.abspath(path))
-    file_name, ext = os.path.splitext(path)
-    return filename, ext
+def relative_path_extractor(input_path):
+    dirname, filename = os.path.split(os.path.abspath(input_path))
+    relative_path = os.path.relpath(input_path, start=os.curdir)
+    relative_path = relative_path.strip('../')
+    relative_path = relative_path.replace(filename, '')
+    return relative_path
+
+
+def file_name_ext_extractor(input_path):
+    file_name, ext = os.path.splitext(input_path)
+    file_name = os.path.basename(input_path)
+    file_name = file_name.split(ext)
+    return file_name[0], ext
 
 
 @my_timer
@@ -51,16 +60,30 @@ def convert_to_grayscale(input_path, output_path):
     except Exception:
         print(" Output Path exists, images will be written in same folder.")
         shutil.rmtree(output_path)
-        os.makedirs(output_path)
-    input_path = input_path + '/**jpeg'
+    input_path_ext = '{}{}'.format(input_path, '/**/*')
+    # Extension List
+    extensions = ('.jpeg', '.jpg', '.png')
     # Recursive Parsing of Images
-    image_files = glob.glob(input_path, recursive=True)
-    for image in image_files:
-        filename, ext = output_file_extractor(image)
-        image_bgr = opencv.imread(image)
-        image_gray = opencv.cvtColor(image_bgr, opencv.COLOR_BGR2GRAY)
-        output_image_path = "{}/{}".format(output_path, filename)
-        opencv.imwrite(output_image_path, image_gray)
+    for i in extensions:
+        img_files = glob.glob('{}{}'.format(input_path_ext, i), recursive=True)
+        for image in img_files:
+            try:
+                # Finding the filename and its Extension
+                filename, ext = file_name_ext_extractor(image)
+                # Finding the Relative Path
+                relative_path = relative_path_extractor(image)
+                # Creating the sub directory structure
+                output_image_path = os.path.join(output_path, relative_path)
+                os.makedirs(output_image_path)
+            except Exception:
+                print("Path is Same")
+            image_bgr = opencv.imread(image)
+            # Image Conversion from Color to Grayscale
+            image_gray = opencv.cvtColor(image_bgr, opencv.COLOR_BGR2GRAY)
+            # Final Image Path
+            final_path = '{}/{}{}'.format(output_image_path, filename, ext)
+            # Writing of Image in the given Final Path
+            opencv.imwrite(final_path, image_gray)
 
 
 def main(args):

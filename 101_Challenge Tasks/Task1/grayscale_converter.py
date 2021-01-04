@@ -32,15 +32,14 @@ def my_timer(original_func):
 def relative_path_extractor(input_path):
     dirname, filename = os.path.split(os.path.abspath(input_path))
     relative_path = os.path.relpath(input_path, start=os.curdir)
-    relative_path = relative_path.strip('../')
-    relative_path = relative_path.replace(filename, '')
+    relative_path = relative_path.strip('../').replace(filename, '')
+    # print(relative_path)
     return relative_path
 
 
 def file_name_ext_extractor(input_path):
     file_name, ext = os.path.splitext(input_path)
-    file_name = os.path.basename(input_path)
-    file_name = file_name.split(ext)
+    file_name = os.path.basename(input_path).split(ext)
     return file_name[0], ext
 
 

@@ -9,7 +9,7 @@ class VideoReader:
 
     initialized = False
 
-    def __init__(self, video_path, queue_size=512):
+    def __init__(self, video_path, queue_size=1024):
         self.stream = cv2.VideoCapture(video_path)
         self.q = Queue(maxsize=queue_size)
         self.initialized = True
@@ -34,6 +34,7 @@ class VideoReader:
                 grabbed, frame = self.stream.read()
 
                 if not grabbed:
+                    self.stream.release()
                     self.complete = True
                     return
 

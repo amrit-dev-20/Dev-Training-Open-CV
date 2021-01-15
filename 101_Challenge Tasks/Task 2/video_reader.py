@@ -12,13 +12,13 @@ class VideoReader:
 
     def __init__(self, video_path, queue_size=512):
         """
-        Initializing the variables 
+        Initializing the variables
         """
         self.stream = opencv.VideoCapture(video_path)
-        self.q = Queue(maxsize =queue_size)
+        self.q = Queue(maxsize=queue_size)
         self.initialized = True
         self.complete = False
-    
+
     def __read_frames():
         """
         This is a private method, to read the video of the 
@@ -30,11 +30,7 @@ class VideoReader:
                 frame_captured, frame = self.stream.read()
 
                 if not grabbed:
-                    
-
-
-    
-    
+                     
     def start_read(self):
 
         if self.initialized:
